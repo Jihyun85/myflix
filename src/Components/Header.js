@@ -35,6 +35,7 @@ const SLink = styled(Link)`
   height: 50px;
 `;
 
+// Header Component
 export default withRouter(({ location: { pathname } }) => (
   <Header>
     <List>
