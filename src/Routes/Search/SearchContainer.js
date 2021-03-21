@@ -1,3 +1,4 @@
+import { moviesApi, tvApi } from "api";
 import React from "react";
 import SearchPresenter from "./SearchPresenter";
 
@@ -9,6 +10,42 @@ export default class extends React.Component {
     error: null,
     loading: false, // 사용자가 입력하기를 기다릴 것임
   };
+
+  componentDidMount() {
+    this.handleSubmit();
+  }
+
+  handleSubmit = async () => {
+    const { searchTerm } = this.state;
+    this.setState({
+      loading: true,
+    });
+    try {
+      const {
+        data: { results: movieResults },
+      } = await moviesApi.search(searchTerm);
+      const {
+        data: { results: tvResults },
+      } = await tvApi.search(searchTerm);
+      this.setState({
+        movieResults,
+        tvResults,
+      });
+    } catch (error) {
+      this.setState({
+        error: "Can't find results.",
+      });
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
+  };
+
+  searchByTerm = () => {
+    const { searchTerm } = this.state;
+  };
+
   render() {
     const { movieResults, tvResults, searchTerm, error, loading } = this.state;
     return (
@@ -18,6 +55,7 @@ export default class extends React.Component {
         searchTerm={searchTerm}
         error={error}
         loading={loading}
+        handleSubmit={this.handleSubmit}
       />
     );
   }
