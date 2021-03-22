@@ -5,7 +5,7 @@ import styled from "styled-components";
 const HomePresenter = ({ nowPlaying, upcoming, popular, error, loading }) =>
   null;
 
-HomePresenter.prototype = {
+HomePresenter.propTypes = {
   nowPlaying: PropTypes.array,
   upcoming: PropTypes.array,
   popular: PropTypes.array,

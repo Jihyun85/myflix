@@ -11,7 +11,7 @@ const SearchPresenter = ({
   handleSubmit,
 }) => null;
 
-SearchPresenter.prototype = {
+SearchPresenter.propTypes = {
   movieResults: PropTypes.array,
   tvResults: PropTypes.array,
   searchTerm: PropTypes.string,
