@@ -11,11 +11,24 @@ export default class extends React.Component {
     loading: false, // 사용자가 입력하기를 기다릴 것임
   };
 
-  componentDidMount() {
-    this.handleSubmit();
-  }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { searchTerm } = this.state;
+    if (searchTerm !== "") {
+      this.searchByTerm();
+    }
+  };
 
-  handleSubmit = async () => {
+  updateTerm = (event) => {
+    const {
+      target: { value },
+    } = event;
+    this.setState({
+      searchTerm: value,
+    });
+  };
+
+  searchByTerm = async () => {
     const { searchTerm } = this.state;
     this.setState({
       loading: true,
@@ -42,10 +55,6 @@ export default class extends React.Component {
     }
   };
 
-  searchByTerm = () => {
-    const { searchTerm } = this.state;
-  };
-
   render() {
     const { movieResults, tvResults, searchTerm, error, loading } = this.state;
     return (
@@ -56,6 +65,7 @@ export default class extends React.Component {
         error={error}
         loading={loading}
         handleSubmit={this.handleSubmit}
+        updateTerm={this.updateTerm}
       />
     );
   }
