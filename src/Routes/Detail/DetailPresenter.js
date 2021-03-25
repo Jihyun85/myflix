@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "Components/Loader";
+import Tab from "Components/Tab";
 
 const Container = styled.div`
   position: relative;
@@ -63,6 +64,11 @@ const Divider = styled.span`
   margin: 0 10px;
 `;
 
+const Tagline = styled.p`
+  font-size: 16px;
+  margin-bottom: 10px;
+`;
+
 const Overview = styled.p`
   width: 50%;
   font-size: 12px;
@@ -70,7 +76,22 @@ const Overview = styled.p`
   opacity: 0.7;
 `;
 
-const DetailPresenter = ({ result, error, loading }) =>
+const LinkBox = styled.div`
+  display: flex;
+`;
+
+const LinkBtn = styled.a`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  margin: 20px 5px;
+  padding: 3px 10px;
+  background-color: ${(props) => props.color};
+  border-radius: 5px;
+`;
+
+const DetailPresenter = ({ result, error, loading, handleClick, currentTab }) =>
   loading ? (
     <Loader />
   ) : (
@@ -107,16 +128,39 @@ const DetailPresenter = ({ result, error, loading }) =>
             <Divider>•</Divider>
             <Item>{result.genres.map((obj) => obj.name).join(" / ")}</Item>
           </ItemContainer>
+          {result.tagline && <Tagline>{result.tagline}</Tagline>}
           <Overview>{result.overview}</Overview>
+          <LinkBox>
+            {result.homepage ? (
+              <LinkBtn href={result.homepage} color="#6ab04c">
+                Homepage
+              </LinkBtn>
+            ) : null}
+            {result.imdb_id ? (
+              <LinkBtn
+                href={`https://www.imdb.com/title/${result.imdb_id}`}
+                color="#f5c518"
+              >
+                IMDB
+              </LinkBtn>
+            ) : null}
+          </LinkBox>
+          <Tab
+            title={["Production", "Collections"]}
+            handleClick={handleClick}
+            currentTab={currentTab}
+            data={result}
+          />
         </Data>
       </Content>
     </Container>
   );
 
 DetailPresenter.propTypes = {
-  result: PropTypes.array,
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  currentTab: PropTypes.string.isRequired,
 };
 
 export default DetailPresenter;
