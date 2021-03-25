@@ -21,5 +21,7 @@
 ## Code Challenges
 
 - [x] IMDB Link
-- [ ] Tabs inside of Movie / Show Details (YT Videos, Production Company & Countries)
-- [ ] On TV Show, show seasons and creators
+
+# Preview:
+
+Try it on [netflify] (https://master--modest-lalande-ee2472.netlify.app/#/)
